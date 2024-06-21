@@ -39,12 +39,22 @@ function updateList(){
     var item = JSON.parse(localStorage.getItem(key));
 
     var li = document.createElement("li");
-    var textNode = document.createTextNode("Username: " + item.Name + ", Email: " + item.Email + ", Data de Inscrição: " + item.RegistrationDate);
-    li.appendChild(textNode);
+    var usernamePara = document.createElement("p");
+    usernamePara.textContent = "Username: " + item.Name;
+    li.appendChild(usernamePara);
+
+    var emailPara = document.createElement("p");
+    emailPara.textContent = "Email: " + item.Email;
+    li.appendChild(emailPara);
+
+    var registrationPara = document.createElement("p");
+    registrationPara.textContent = "Data de Inscrição: " + item.RegistrationDate;
+    li.appendChild(registrationPara);
 
     var deleteButton = document.createElement("button");
     deleteButton.textContent = "Excluir item";
     deleteButton.setAttribute("data-key", key);
+    deleteButton.className = "delete-item-btn";
 
     deleteButton.onclick = function(){
       var keyToDelete = this.getAttribute("data-key");
