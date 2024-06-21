@@ -66,6 +66,46 @@ function updateList(){
   }
 }
 
+function search() {
+    var searchTerm = document.getElementById('searchTerm').value.toLowerCase();
+    var cadastroLista = document.getElementById('cadastroLista');
+    cadastroLista.innerHTML = '';
+  
+    for (var i = 0; i < localStorage.length; i++) {
+      var key = localStorage.key(i);
+      var item = JSON.parse(localStorage.getItem(key));
+  
+      // Verifica se o searchTerm corresponde ao username ou email
+      if (item.Name.toLowerCase().includes(searchTerm) || item.Email.toLowerCase().includes(searchTerm)) {
+        var li = document.createElement("li");
+        var usernamePara = document.createElement("p");
+        usernamePara.textContent = "Username: " + item.Name;
+        li.appendChild(usernamePara);
+  
+        var emailPara = document.createElement("p");
+        emailPara.textContent = "Email: " + item.Email;
+        li.appendChild(emailPara);
+  
+        var registrationPara = document.createElement("p");
+        registrationPara.textContent = "Data de Inscrição: " + item.RegistrationDate;
+        li.appendChild(registrationPara);
+  
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = "Excluir item";
+        deleteButton.setAttribute("data-key", key);
+        deleteButton.className = "delete-item-btn";
+  
+        deleteButton.onclick = function() {
+          var keyToDelete = this.getAttribute("data-key");
+          localStorage.removeItem(keyToDelete);
+          updateList();
+        }
+        li.appendChild(deleteButton);
+        cadastroLista.appendChild(li)
+      }
+    }
+  }
+
 function deleteAll() {
   localStorage.clear();
   updateList();
